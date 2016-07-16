@@ -10,7 +10,7 @@ int DoPartitionGetIndexOfPivotEleLomuto(int array[], int ibegin, int iend) {
   //        lesser      greater
   //
   //  SubGoal I:   all eles before ipivot index should be lesser or equal   than ele at ipivot
-  //  SubGoal II:  all eles after  ipivot index should be greater          than ele at ipivot
+  //  SubGoal II:  all eles after  ipivot index should be greater           than ele at ipivot
 
   // Initially, let the pivot_ele be last element
   int pivot_ele = array[iend];
