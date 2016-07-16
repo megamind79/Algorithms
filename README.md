@@ -5,3 +5,6 @@
 Example:
 
 g++ quicksort_lomuto.cpp
+
+
+If you like, click on Star or click on Fork to suggest changes
