@@ -1,64 +1,66 @@
-#include "iostream"
+#include "iostream"   // cout
+#include "iomanip"    // setw
 using namespace std;
 
-int DoPartitionGetIndexOfPivotEle(int array[], int ibegin, int iend) {
+int DoPartitionGetIndexOfPivotEleLomuto(int array[], int ibegin, int iend) {
 
-  // Goal: Find   iPivot, return it
+  // Goal: Find   ipivot, return it
   //
-  //  ibegin      iPivot       iend
+  //  ibegin      ipivot       iend
   //        lesser      greater
   //
-  //  SubGoal I:   all eles before iPivot index should be lesser or equal   than ele at iPivot
-  //  SubGoal II:  all eles after  iPivot index should be greater          than ele at iPivot
+  //  SubGoal I:   all eles before ipivot index should be lesser or equal   than ele at ipivot
+  //  SubGoal II:  all eles after  ipivot index should be greater          than ele at ipivot
 
-  // Initially, let the Pivot be last element
-  int Pivot = array[iend];
+  // Initially, let the pivot_ele be last element
+  int pivot_ele = array[iend];
 
-  // iPivot points to first element
-  //    Finally will take the Pivot element's index
-  int iPivot = ibegin;
+  // ipivot points to first element
+  //    Finally will take the pivot_ele element's index
+  int ipivot = ibegin;
 
   // for all elements expcept last ele
   for (int i = ibegin; i < iend; i++) {
 
-    // if ele at i is less than Pivot (last ele)
-    //    swap iPivot(starts from begin) element with i, and move iPivot ahead
-    // this way we ensure elements before iPivot are lesser or equal (I: above)
+    // if ele at i is less than pivot_ele (last ele)
+    // Goal: Place the element before ipivot
+    //    swap ipivot(starts from begin) element with i, and move ipivot ahead
+    // this way we ensure elements before ipivot are lesser or equal (I: above)
     if (array[i] <= array[iend]) {
 
-      // swap i with iPivot // no effect 1st time
-      int temp = array[iPivot];
-      array[iPivot] = array[i];
+      // swap i with ipivot // no effect 1st time
+      int temp = array[ipivot];
+      array[ipivot] = array[i];
       array[i] = temp;
 
-      iPivot++;
+      ipivot++;
     }
   }
 
-  // Now iPivot is somewhere in the middle
+  // Now ipivot is somewhere in the middle
   //    i went till iend-1
-  // And, elements before iPivot are lesser or equal
-  //    => elements at & after iPivot are greater
+  // And, elements before ipivot are lesser or equal
+  //    => elements at & after ipivot are greater
   //
   // since i didnot touch last element at iend
-  //    we did not compare iPivot to iend
-  // => ele at iPivot is greater than Pivot at iend
-  //  so swap iPivot & iend
-  int temp = array[iPivot];
-  array[iPivot] = array[iend];
+  //    we did not compare ipivot to iend
+  // => ele at ipivot is greater than pivot_ele at iend
+  //  so swap ipivot & iend
+  int temp = array[ipivot];
+  array[ipivot] = array[iend];
   array[iend] = temp;
 
-  // Now iPivot has Pivot value
-  //  => iPivot has made required partition, eles before it are <=, eles after it are >
-  // so return iPivot (since both SubGoal I && SubGoal II are satisfied)
+  // Now ipivot has pivot_ele value
+  //  => ipivot has made required partition, eles before it are <=, eles after it are >
+  // so return ipivot (since both SubGoal I && SubGoal II are satisfied)
 
-  return iPivot;
+  return ipivot;
 }
-void QuickSort(int array[], int ibegin, int iend) {
+void QuickSortLomuto(int array[], int ibegin, int iend) {
   if (ibegin <= iend) { // initially 0 to N-1
-    int iPivot = DoPartitionGetIndexOfPivotEle(array, ibegin, iend); // get pivot position
-    QuickSort(array, ibegin, iPivot - 1);  // call self, for before pivot position subarray
-    QuickSort(array, iPivot + 1, iend);    // call self, for after  pivot position subarray
+    int ipivot = DoPartitionGetIndexOfPivotEleLomuto(array, ibegin, iend); // get pivot position
+    QuickSortLomuto(array, ibegin, ipivot - 1);  // call self, for before pivot position subarray
+    QuickSortLomuto(array, ipivot + 1, iend);    // call self, for after pivot position subarray
   }
 }
 void QuickSortLomuto() {
@@ -68,15 +70,13 @@ void QuickSortLomuto() {
   int ibegin = 0;
   int iend = N - 1;
 
-  QuickSort(array, ibegin, iend);  // send all elements
+  QuickSortLomuto(array, ibegin, iend);  // send all elements
 
   // print sorted array
-  for (int i = 0; i < N; i++) {
-    cout << array[i] << " ";
+  for (int t = 0; t <= N - 1; t++) {
+    cout << setw(2) << array[t] << " ";
   }
   cout << endl;
-  // Output
-  //    0 2 3 4 5 7 9 10 11 12 14
 }
 
 int main() {
